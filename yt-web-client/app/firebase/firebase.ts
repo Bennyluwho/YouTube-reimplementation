@@ -39,7 +39,7 @@ export function signOut() {
 
 /**
  *Trigger a callback when user auth state changes.
- *@returns A fucntion to unsubscribe callback.  
+ *@returns A function to unsubscribe callback.  
  */
 export function onAuthStateChangedHelper(callback: (user: User | null) => void) {
     return onAuthStateChanged(auth, callback);
