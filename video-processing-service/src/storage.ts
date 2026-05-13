@@ -28,11 +28,11 @@ export function convertVideo(rawVideoName: string, processedVideoName: string) {
   return new Promise<void>((resolve, reject) => {
     ffmpeg(`${localRawVideoPath}/${rawVideoName}`)
       .outputOptions("-vf", "scale=-1:360") //360p
-      .on("end", () => {
+      .on("end", function () {
           console.log("Processing finished successfully");
           resolve();
       })
-      .on("error", (err) => {
+      .on("error", function (err) {
           console.log(`An error occurred: ${err.message}`);
           reject(err);
       })
@@ -62,7 +62,7 @@ export async function downloadRawVideo(fileName: string) {
 export async function uploadProcessedVideo(fileName: string) {
     const bucket = storage.bucket(processedVideoBucketName);
 
-    bucket.upload(`${localProcessedVideoPath}/${fileName}`, {
+    await bucket.upload(`${localProcessedVideoPath}/${fileName}`, {
         destination: fileName,
     });
     console.log(`${localProcessedVideoPath}/${fileName} uploaded to gs://${processedVideoBucketName}/${fileName}.`);
